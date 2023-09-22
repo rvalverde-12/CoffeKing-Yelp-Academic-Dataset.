@@ -57,5 +57,14 @@ write.csv(attributes,file= 'C:/Users/Lipsky/yelp_attributes.csv')
 write.csv(hours,file= 'C:/Users/Lipsky/yelp_hours.csv')
 ```
 
+### Entity Relationship Diagram (ERD)
+<br>
+        <p align="left">
+          <img src="images/ERD.jpeg" width="800"/>
+        </p>
+      </li>
+    </ul>
+  </li>
+  <li>
 
 
