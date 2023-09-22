@@ -57,3 +57,5 @@ write.csv(attributes,file= 'C:/Users/Lipsky/yelp_attributes.csv')
 write.csv(hours,file= 'C:/Users/Lipsky/yelp_hours.csv')
 ```
 
+
+
