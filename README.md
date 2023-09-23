@@ -1,4 +1,4 @@
-# **CoffeKing_Yelp_Academic_Dataset**
+# **CoffeeKing_Yelp_Academic_Dataset**
 
 ## Background
 CoffeeKing, a startup coffee company, aims to offer a unique and inclusive experience. They seek insights from Yelp reviews and user data to inform location selection, operating hours, business enhancements, and loyalty-focused marketing strategies.
