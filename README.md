@@ -59,7 +59,7 @@ business1$hours <- NULL
 ### Remove "attributes" from column names in attributes_df
 ```ruby
 colnames(attributes_df) <- gsub("^attributes\\.", "", colnames(attributes_df))
-colnames(hours_df) <- gsub("^hours\\.", "", colnames(hours_df))
+
 ```
 ### Cleaning attributes Wifi
 ```ruby
@@ -78,6 +78,33 @@ attributes_df$Alcohol <- ifelse(attributes_df$Alcohol == "u'none'", "N/A",
                                                      ifelse(attributes_df$Alcohol == "'beer_and_wine'", "Beer_and_Wine",
                                                             ifelse(attributes_df$Alcohol == "'none'", "N/A",
                                                                    ifelse(attributes_df$Alcohol == "NA", "N/A", attributes_df$Alcohol)))))))
+```
+## Hours table
+
+### Remove "hours" from column names in hours_df
+```ruby
+colnames(hours_df) <- gsub("^hours\\.", "", colnames(hours_df))
+```
+
+### Convert the time range to POSIXlt objects
+```ruby
+hours_df$Monday <- strptime(hours_df$Monday, format = "%H:%M-%H:%M")
+hours_df$Tuesday <- strptime(hours_df$Tuesday, format = "%H:%M-%H:%M")
+hours_df$Wednesday <- strptime(hours_df$Wednesday, format = "%H:%M-%H:%M")
+hours_df$Thursday <- strptime(hours_df$Thursday, format = "%H:%M-%H:%M")
+hours_df$Friday <- strptime(hours_df$Friday, format = "%H:%M-%H:%M")
+hours_df$Saturday<- strptime(hours_df$Saturday, format ="%H:%M-%H:%M")
+hours_df$Sunday <- strptime(hours_df$Saturday, format ="%H:%M-%H:%M")
+```
+### Format time in 12-hour format (AM/PM)
+```ruby
+hours_df$Monday <- format(hours_df$Monday, format = "%I:%M %p")
+hours_df$Tuesday <- format(hours_df$Tuesday, format = "%I:%M %p")
+hours_df$Wednesday <- format(hours_df$Wednesday, format = "%I:%M %p")
+hours_df$Thursday <- format(hours_df$Thursday, format="%I:%M %p")
+hours_df$Friday <- format(hours_df$Friday, format = "%I:%M %p")
+hours_df$Saturday <- format(hours_df$Saturday, format= "%I:%M %p" )
+hours_df$Sunday <- format(hours_df$Sunday, format = "%I:%M %p")
 ```
 ### Exporting into CSV files
 ```ruby
