@@ -53,26 +53,6 @@ hours_df <- data.frame(business_id = business$business_id, hours = business$hour
 business1$attributes <- NULL
 business1$hours <- NULL
 ```
-### Exporting into CSV files
-```ruby
-write.csv(business,file= 'C:/Users/Lipsky/yelp_business.csv')
-write.csv(checkin,file= 'C:/Users/Lipsky/yelp_checkin.csv')
-write.csv(review,file= 'C:/Users/Lipsky/yelp_review.csv')
-write.csv(tip,file= 'C:/Users/Lipsky/yelp_tip.csv')
-write.csv(user,file= 'C:/Users/Lipsky/yelp_user.csv')
-write.csv(attributes_df,file= 'C:/Users/Lipsky/yelp_attributes.csv')
-write.csv(hours_df,file= 'C:/Users/Lipsky/yelp_hours.csv')
-```
-
-### Entity Relationship Diagram (ERD)
-<br>
-        <p align="left">
-          <img src="images/ERD1.jpeg" width="800"/>
-        </p>
-      </li>
-    </ul>
-  </li>
-  <li>
 
 ## Process - Cleaning
 
@@ -99,7 +79,23 @@ attributes_df$Alcohol <- ifelse(attributes_df$Alcohol == "u'none'", "N/A",
                                                             ifelse(attributes_df$Alcohol == "'none'", "N/A",
                                                                    ifelse(attributes_df$Alcohol == "NA", "N/A", attributes_df$Alcohol)))))))
 ```
+### Exporting into CSV files
+```ruby
+write.csv(business,file= 'C:/Users/Lipsky/yelp_business.csv')
+write.csv(checkin,file= 'C:/Users/Lipsky/yelp_checkin.csv')
+write.csv(review,file= 'C:/Users/Lipsky/yelp_review.csv')
+write.csv(tip,file= 'C:/Users/Lipsky/yelp_tip.csv')
+write.csv(user,file= 'C:/Users/Lipsky/yelp_user.csv')
+write.csv(attributes_df,file= 'C:/Users/Lipsky/yelp_attributes.csv')
+write.csv(hours_df,file= 'C:/Users/Lipsky/yelp_hours.csv')
+```
 
-
-
+### Entity Relationship Diagram (ERD)
+<br>
+        <p align="left">
+          <img src="images/ERD Cows Foot Notation.jpeg" width="800"/>
+        </p>
+      </li>
+    </ul>
+  </li>
 
