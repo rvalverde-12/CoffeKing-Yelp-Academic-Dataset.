@@ -76,6 +76,11 @@ write.csv(hours_df,file= 'C:/Users/Lipsky/yelp_hours.csv')
 
 ## Process - Cleaning
 
+# Remove "attributes" from column names in attributes_df
+```ruby
+colnames(attributes_df) <- gsub("^attributes\\.", "", colnames(attributes_df))
+colnames(hours_df) <- gsub("^hours\\.", "", colnames(hours_df))
+```
 ## Cleaning attributes Wifi
 ```ruby
 attributes_df$WiFi <- ifelse(attributes_df$WiFi == "u'no'", "No",
@@ -94,6 +99,7 @@ attributes_df$Alcohol <- ifelse(attributes_df$Alcohol == "u'none'", "N/A",
                                                             ifelse(attributes_df$Alcohol == "'none'", "N/A",
                                                                    ifelse(attributes_df$Alcohol == "NA", "N/A", attributes_df$Alcohol)))))))
 ```
+
 
 
 
