@@ -27,9 +27,11 @@ I'm choosing this project over the other ones because I'm highly intrigued by th
  ```ruby
 install.packages("jsonlite")
 install.packages("dplyr")
+install.packages("tidyverse")
 
 library(jsonlite)
 library(dplyr)
+library(tidyverse)
 ```
 ### Importing the JSON files
  ```ruby
@@ -39,12 +41,17 @@ checkin <- stream_in(file("yelp_academic_dataset_checkin.json"))
 user <- stream_in(file("yelp_academic_dataset_user.json"))
 review <- stream_in(file("yelp_academic_dataset_review.json"))
 business <- stream_in(file("yelp_academic_dataset_business.json"))
+
 ```
-I've created separate tables for "hours" and "attributes" in adherence to normalization principles. This approach optimizes storage, simplifies querying for specific data, and supports scalability.
+### Extract business_id, attributes and hours into a new data frame
 ```ruby
-attributes <- business[c("business_id", "attributes" )]
-hours <- business[c("business_id", "hours" )]
-business <- business[, !(colnames(business) %in% c("attributes", "hours"))
+attributes_df <- data.frame(business_id = business$business_id, attributes = business$attributes)
+hours_df <- data.frame(business_id = business$business_id, hours = business$hours)
+```
+### Remove the attributes and hours dataframes from the business data frame
+```ruby
+business1$attributes <- NULL
+business1$hours <- NULL
 ```
 ### Exporting into CSV files
 ```ruby
@@ -53,8 +60,8 @@ write.csv(checkin,file= 'C:/Users/Lipsky/yelp_checkin.csv')
 write.csv(review,file= 'C:/Users/Lipsky/yelp_review.csv')
 write.csv(tip,file= 'C:/Users/Lipsky/yelp_tip.csv')
 write.csv(user,file= 'C:/Users/Lipsky/yelp_user.csv')
-write.csv(attributes,file= 'C:/Users/Lipsky/yelp_attributes.csv')
-write.csv(hours,file= 'C:/Users/Lipsky/yelp_hours.csv')
+write.csv(attributes_df,file= 'C:/Users/Lipsky/yelp_attributes.csv')
+write.csv(hours_df,file= 'C:/Users/Lipsky/yelp_hours.csv')
 ```
 
 ### Entity Relationship Diagram (ERD)
@@ -66,5 +73,27 @@ write.csv(hours,file= 'C:/Users/Lipsky/yelp_hours.csv')
     </ul>
   </li>
   <li>
+
+## Process - Cleaning
+
+## Cleaning attributes Wifi
+```ruby
+attributes_df$WiFi <- ifelse(attributes_df$WiFi == "u'no'", "No",
+                             ifelse(attributes_df$WiFi == "u'free'", "Free",
+                                    ifelse(attributes_df$WiFi == "'free'", "Free",
+                                           ifelse(attributes_df$WiFi == "'no'", "No",
+                                                  ifelse(is.na(attributes_df$WiFi), "No", "Paid")))))
+```
+## Cleaning attributes Alcohol
+```ruby
+attributes_df$Alcohol <- ifelse(attributes_df$Alcohol == "u'none'", "N/A",
+                                ifelse(attributes_df$Alcohol == "u'full_bar'", "Full_Bar",
+                                       ifelse(attributes_df$Alcohol == "'full_bar'", "Full_Bar",
+                                              ifelse(attributes_df$Alcohol == "u'beer_and_wine'", "Beer_and_Wine",
+                                                     ifelse(attributes_df$Alcohol == "'beer_and_wine'", "Beer_and_Wine",
+                                                            ifelse(attributes_df$Alcohol == "'none'", "N/A",
+                                                                   ifelse(attributes_df$Alcohol == "NA", "N/A", attributes_df$Alcohol)))))))
+```
+
 
 
