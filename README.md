@@ -157,29 +157,29 @@ write.csv(yelp_closing_hours,file= 'C:/Users/Lipsky/yelp_closing_hours')
 - I'm primarily using SQLite for most of the analysis, as it aligns with the SQL course's focus.
 
 ``` SQL
-SELECT b.State
-		,b.city
-		,COUNT(b.name) AS Stores
-		,ROUND(AVG(num_reviews), 2) AS AVG_Reviews
-		,ROUND(AVG(r.stars), 2) AS AVG_Stars
+SELECT     b.State
+           ,b.city
+           ,COUNT(b.name) AS Stores
+           ,ROUND(AVG(num_reviews), 2) AS AVG_Reviews
+           ,ROUND(AVG(r.stars), 2) AS AVG_Stars
 
-FROM yelp_business b
+FROM       yelp_business b
 
 LEFT JOIN  (
 
 	SELECT business_id
 	       ,COUNT(review_id) AS num_reviews
 		   ,stars
-    FROM   yelp_review
+        FROM   yelp_review
 	GROUP BY
 			business_id
 	) r ON b.business_id = r.business_id
 
-WHERE categories  LIKE '%Coffee & Tea%'
+        WHERE categories  LIKE '%Coffee & Tea%'
 
-GROUP BY b.city
+GROUP BY    b.city
 HAVING
-    AVG_Stars BETWEEN 3.0 AND 3.5
+           AVG_Stars BETWEEN 3.0 AND 3.5
 ORDER BY Stores DESC;
 ```
 
