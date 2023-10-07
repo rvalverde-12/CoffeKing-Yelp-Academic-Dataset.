@@ -24,7 +24,7 @@ I'm choosing this project over the other ones because I'm highly intrigued by th
 - I'm using R to convert JSON data to CSV format, facilitating the creation of a SQLite database.
 
 ### Installing and loading necessary packages
- ```ruby
+ ``` ruby
 install.packages("jsonlite")
 install.packages("dplyr")
 install.packages("tidyverse")
@@ -152,4 +152,34 @@ write.csv(yelp_closing_hours,file= 'C:/Users/Lipsky/yelp_closing_hours')
       </li>
     </ul>
   </li>
+
+## Analysis
+- I'm primarily using SQLite for most of the analysis, as it aligns with the SQL course's focus.
+
+``` SQL
+SELECT b.State
+		,b.city
+		,COUNT(b.name) AS Stores
+		,ROUND(AVG(num_reviews), 2) AS AVG_Reviews
+		,ROUND(AVG(r.stars), 2) AS AVG_Stars
+
+FROM yelp_business b
+
+LEFT JOIN  (
+
+	SELECT business_id
+	       ,COUNT(review_id) AS num_reviews
+		   ,stars
+    FROM   yelp_review
+	GROUP BY
+			business_id
+	) r ON b.business_id = r.business_id
+
+WHERE categories  LIKE '%Coffee & Tea%'
+
+GROUP BY b.city
+HAVING
+    AVG_Stars BETWEEN 3.0 AND 3.5
+ORDER BY Stores DESC;
+```
 
