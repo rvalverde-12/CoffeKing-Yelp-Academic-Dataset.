@@ -147,7 +147,7 @@ write.csv(yelp_closing_hours,file= 'C:/Users/Lipsky/yelp_closing_hours')
 ### Entity Relationship Diagram (ERD)
 <br>
         <p align="left">
-          <img src="images/ERD Cows Foot Notation.jpeg" width="800"/>
+          <img src="images/Entity Relationship Diagram.jpeg" width="800"/>
         </p>
       </li>
     </ul>
