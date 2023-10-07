@@ -158,6 +158,8 @@ write.csv(yelp_closing_hours,file= 'C:/Users/Lipsky/yelp_closing_hours')
 
 #### Stores by City and AVG Reviews and Ratings
 
+The goal of this query is to identify prime store locations by analyzing cities based on store volume, reviews, and star ratings, focusing on coffee shop interest, engagement, and competition.
+
 ``` SQL
 SELECT     b.State
            ,b.city
@@ -182,7 +184,7 @@ LEFT JOIN  (
 GROUP BY    b.city
 HAVING
            AVG_Stars BETWEEN 3.0 AND 3.5
-ORDER BY Stores DESC;
+ORDER BY Stores DESC
 LIMIT 5;
 ```
 
@@ -196,6 +198,8 @@ LIMIT 5;
 
 
 #### Percentage of Closed Businesses By State and Filtered by Category Coffee & Tea
+
+With this new query, I aimed to determine the closure rate of businesses by state, assessing  the market's level of challenge.
 
 ``` SQL
 SELECT 
