@@ -86,25 +86,51 @@ attributes_df$Alcohol <- ifelse(attributes_df$Alcohol == "u'none'", "N/A",
 colnames(hours_df) <- gsub("^hours\\.", "", colnames(hours_df))
 ```
 
-### Convert the time range to POSIXlt objects
+### Split opening and closing hours into separate columns
 ```ruby
-hours_df$Monday <- strptime(hours_df$Monday, format = "%H:%M-%H:%M")
-hours_df$Tuesday <- strptime(hours_df$Tuesday, format = "%H:%M-%H:%M")
-hours_df$Wednesday <- strptime(hours_df$Wednesday, format = "%H:%M-%H:%M")
-hours_df$Thursday <- strptime(hours_df$Thursday, format = "%H:%M-%H:%M")
-hours_df$Friday <- strptime(hours_df$Friday, format = "%H:%M-%H:%M")
-hours_df$Saturday<- strptime(hours_df$Saturday, format ="%H:%M-%H:%M")
-hours_df$Sunday <- strptime(hours_df$Saturday, format ="%H:%M-%H:%M")
+ hours_df <- hours_df %>%
+   separate(Monday, into = c("Monday_Open", "Monday_Close"), sep = "-") %>%
+   separate(Tuesday, into = c("Tuesday_Open", "Tuesday_Close"), sep = "-") %>%
+   separate(Wednesday, into = c("Wednesday_Open", "Wednesday_Close"), sep = "-") %>%
+   separate(Thursday, into = c("Thursday_Open", "Thursday_Close"), sep = "-") %>%
+   separate(Friday, into = c("Friday_Open", "Friday_Close"), sep = "-") %>%
+   separate(Saturday, into = c("Saturday_Open", "Saturday_Close"), sep = "-") %>%
+   separate(Sunday, into = c("Sunday_Open", "Sunday_Close"), sep = "-")
 ```
-### Format time in 12-hour format (AM/PM)
+### Define a function to convert time format and handle null values
 ```ruby
-hours_df$Monday <- format(hours_df$Monday, format = "%I:%M %p")
-hours_df$Tuesday <- format(hours_df$Tuesday, format = "%I:%M %p")
-hours_df$Wednesday <- format(hours_df$Wednesday, format = "%I:%M %p")
-hours_df$Thursday <- format(hours_df$Thursday, format="%I:%M %p")
-hours_df$Friday <- format(hours_df$Friday, format = "%I:%M %p")
-hours_df$Saturday <- format(hours_df$Saturday, format= "%I:%M %p" )
-hours_df$Sunday <- format(hours_df$Sunday, format = "%I:%M %p")
+convert_time <- function(time_str) {
+   ifelse(
+     is.na(time_str) | time_str == "",
+     NA,
+     vapply(strsplit(time_str, "-"), function(x) {
+       parts <- strsplit(x, ":")
+       hours <- as.numeric(parts[[1]][1])
+       minutes <- as.numeric(parts[[1]][2])
+       am_pm <- ifelse(hours < 12, "AM", "PM")
+       hours <- ifelse(hours == 0, 12, ifelse(hours > 12, hours - 12, hours))
+       sprintf("%02d:%02d %s", hours, minutes, am_pm)
+     }, character(1))
+   )
+ }
+```
+
+### Apply the function to all columns with opening and closing hours
+```ruby
+hour_cols <- grep("_Open$|_Close$", names(hours_df), value = TRUE)
+ hours_df[hour_cols] <- lapply(hours_df[hour_cols], convert_time)
+```
+
+### Create a data frame for opening hours
+```ruby
+ yelp_opening_hours <- hours_df %>%
+   select(business_id, ends_with("_Open"))
+```
+
+### Create a data frame for closing hours
+```ruby
+ yelp_closing_hours <- hours_df %>%
+   select(business_id, ends_with("_Close"))
 ```
 ### Exporting into CSV files
 ```ruby
@@ -114,7 +140,8 @@ write.csv(review,file= 'C:/Users/Lipsky/yelp_review.csv')
 write.csv(tip,file= 'C:/Users/Lipsky/yelp_tip.csv')
 write.csv(user,file= 'C:/Users/Lipsky/yelp_user.csv')
 write.csv(attributes_df,file= 'C:/Users/Lipsky/yelp_attributes.csv')
-write.csv(hours_df,file= 'C:/Users/Lipsky/yelp_hours.csv')
+write.csv(yelp_opening_hours,file= 'C:/Users/Lipsky/yelp_opening_hours.csv')
+write.csv(yelp_closing_hours,file= 'C:/Users/Lipsky/yelp_closing_hours')
 ```
 
 ### Entity Relationship Diagram (ERD)
