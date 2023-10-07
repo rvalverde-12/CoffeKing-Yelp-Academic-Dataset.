@@ -156,6 +156,8 @@ write.csv(yelp_closing_hours,file= 'C:/Users/Lipsky/yelp_closing_hours')
 ## Analysis
 - I'm primarily using SQLite for most of the analysis, as it aligns with the SQL course's focus.
 
+#### Stores by City and AVG Reviews and Ratings
+
 ``` SQL
 SELECT     b.State
            ,b.city
@@ -181,5 +183,37 @@ GROUP BY    b.city
 HAVING
            AVG_Stars BETWEEN 3.0 AND 3.5
 ORDER BY Stores DESC;
+LIMIT 5;
 ```
 
+| State | City         | Stores     | AVG_Reviews | AVG_Stars |
+|-------|--------------|------------|-------------|-----------|
+| MO    | St. Louis    | 95         | 54.51       | 3.48      |
+| FL    | Clearwater   | 80         | 44.91       | 3.49      |
+| LA    | Metairie     | 65         | 55.42       | 3.37      |
+| FL    | Largo        | 39         | 37.72       | 3.28      |
+| NJ    | Cherry Hill  | 35         | 30.4        | 3.49      |
+
+
+#### Percentage of Closed Businesses By State and Filtered by Category Coffee & Tea
+
+``` SQL
+SELECT 
+    SUM(CASE WHEN is_open = 0 THEN 1 ELSE 0 END) AS Closed_businesses,
+    COUNT(*) AS Total_count,
+    ROUND((SUM(CASE WHEN is_open = 0 THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 2) AS Percentage_closed,
+    state
+FROM yelp_business
+WHERE categories LIKE '%Coffee & Tea%'
+GROUP BY state
+ORDER BY Total_count DESC
+LIMIT 5;
+```
+
+| Closed Businesses | Total Count | Percentage Closed | State |
+|-------------------|-------------|--------------------|-------|
+| 501               | 1725        | 29.04%             | PA    |
+| 239               | 1106        | 21.61%             | FL    |
+| 135               | 493         | 27.38%             | TN    |
+| 141               | 472         | 29.87%             | LA    |
+| 131               | 467         | 28.05%             | IN    |
