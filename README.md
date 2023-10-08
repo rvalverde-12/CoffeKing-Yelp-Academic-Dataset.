@@ -161,63 +161,75 @@ write.csv(yelp_closing_hours,file= 'C:/Users/Lipsky/yelp_closing_hours')
 The goal of this query is to identify prime store locations by analyzing cities based on store volume, reviews, and star ratings, focusing on coffee shop interest, engagement, and competition.
 
 ``` SQL
-SELECT     b.State
-           ,b.city
-           ,COUNT(b.name) AS Stores
-           ,ROUND(AVG(num_reviews), 2) AS AVG_Reviews
-           ,ROUND(AVG(r.stars), 2) AS AVG_Stars
+SELECT       state
+             ,city
+             ,COUNT(name) AS Stores
+             ,ROUND(AVG(review_count),1) AS AvgReviews
+             ,ROUND(AVG(stars),1) AS AvgStarRating
+FROM  
+		yelp_business
+		
+WHERE stars BETWEEN 3 AND 4 AND categories  LIKE '%Coffee & Tea%' 
 
-FROM       yelp_business b
-
-LEFT JOIN  (
-
-	SELECT business_id
-	       ,COUNT(review_id) AS num_reviews
-		   ,stars
-        FROM   yelp_review
-	GROUP BY
-			business_id
-	) r ON b.business_id = r.business_id
-
-        WHERE categories  LIKE '%Coffee & Tea%'
-
-GROUP BY    b.city
-HAVING
-           AVG_Stars BETWEEN 3.0 AND 3.5
+GROUP BY city
 ORDER BY Stores DESC
 LIMIT 5;
+
 ```
 
-| State | City         | Stores     | AVG_Reviews | AVG_Stars |
-|-------|--------------|------------|-------------|-----------|
-| MO    | St. Louis    | 95         | 54.51       | 3.48      |
-| FL    | Clearwater   | 80         | 44.91       | 3.49      |
-| LA    | Metairie     | 65         | 55.42       | 3.37      |
-| FL    | Largo        | 39         | 37.72       | 3.28      |
-| NJ    | Cherry Hill  | 35         | 30.4        | 3.49      |
+| State | City          | Stores | AvgReviews | AvgStarRating |
+|-------|---------------|--------|------------|---------------|
+| PA    | Philadelphia  | 467    | 96.8       | 3.6           |
+| AB    | Edmonton      | 211    | 24.3       | 3.6           |
+| FL    | Tampa         | 181    | 74.1       | 3.7           |
+| LA    | New Orleans   | 163    | 184.7      | 3.7           |
+| AZ    | Tucson        | 162    | 74.3       | 3.6           |
 
 
-#### Percentage of Closed Businesses By State and Filtered by Category Coffee & Tea
+#### Percentage of Closed Businesses by State and Filtered by Category Coffee & Tea
 
 With this new query, I aimed to determine the closure rate of businesses by state, assessing  the market's level of challenge.
 
 ``` SQL
-SELECT 
-    SUM(CASE WHEN is_open = 0 THEN 1 ELSE 0 END) AS Closed_businesses,
-    COUNT(*) AS Total_count,
-    ROUND((SUM(CASE WHEN is_open = 0 THEN 1 ELSE 0 END) * 100.0 / COUNT(*)), 2) AS Percentage_closed,
-    state
+SELECT SUM(CASE WHEN is_open = 0 THEN 1 ELSE 0 END) AS ClosedBusinesse
+		,COUNT(*) AS TotalCount 
+		,ROUND((SUM(CASE WHEN is_open = 0 THEN 1 ELSE 0 END) * 100.00/ COUNT(*)),2)  AS PercentageClosed
+		,state
 FROM yelp_business
-WHERE categories LIKE '%Coffee & Tea%'
+WHERE categories  LIKE '%Coffee & Tea%'
 GROUP BY state
 ORDER BY Total_count DESC
 LIMIT 5;
 ```
-
-| Closed Businesses | Total Count | Percentage Closed | State |
+| ClosedBusinesses  | TotalCount  | PercentageClosed   | State |
 |-------------------|-------------|--------------------|-------|
 | 501               | 1725        | 29.04%             | PA    |
 | 239               | 1106        | 21.61%             | FL    |
 | 135               | 493         | 27.38%             | TN    |
 | 141               | 472         | 29.87%             | LA    |
 | 131               | 467         | 28.05%             | IN    |
+
+#### Percentage of closed businesses per City
+
+``` SQL
+SELECT SUM(CASE WHEN is_open = 0 THEN 1 ELSE 0 END) AS Closed_businesses
+		,COUNT(*) AS Total_count
+		,ROUND((SUM(CASE WHEN is_open = 0 THEN 1 ELSE 0 END) * 100.00/ COUNT(*)),2)  AS Percentage_closed
+		,state
+		,city
+FROM yelp_business
+
+WHERE state = 'FL' AND categories  LIKE '%Coffee & Tea%'
+GROUP BY city
+ORDER BY Total_count DESC
+LIMIT 5;
+```
+
+| Closed Businesses | Total Count | Percentage Closed  | State  | City             |
+|-------------------|-------------|--------------------|-------|-------------------|
+| 99                | 395         | 25.06%             | FL    | Tampa             |
+| 23                | 80          | 28.75%             | FL    | Clearwater        |
+| 17                | 76          | 22.37%             | FL    | Saint Petersburg  |
+| 11                | 57          | 19.3%              | FL    | St. Petersburg    |
+| 7                 | 39          | 17.95%             | FL    | Largo             |
+
