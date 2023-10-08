@@ -154,9 +154,10 @@ write.csv(yelp_closing_hours,file= 'C:/Users/Lipsky/yelp_closing_hours')
   </li>
 
 ## Analysis
-- I'm primarily using SQLite for most of the analysis, as it aligns with the SQL course's focus.
 
-#### Stores by City and AVG Reviews and Ratings
+I'm primarily using SQLite for most of the analysis, as it aligns with the SQL course's focus.
+
+ * #### Stores by City and AVG Reviews and Ratings
 
 The goal of this query is to identify prime store locations by analyzing cities based on store volume, reviews, and star ratings, focusing on coffee shop interest, engagement, and competition.
 
@@ -186,7 +187,7 @@ LIMIT 5;
 | AZ    | Tucson        | 162    | 74.3       | 3.6           |
 
 
-#### Percentage of Closed Businesses by State and Filtered by Category Coffee & Tea
+* #### Percentage of Closed Businesses by State and Filtered by Category Coffee & Tea
 
 With this new query, I aimed to determine the closure rate of businesses by state, assessing  the market's level of challenge.
 
@@ -209,7 +210,9 @@ LIMIT 5;
 | 141               | 472         | 29.87%             | LA    |
 | 131               | 467         | 28.05%             | IN    |
 
-#### Percentage of closed businesses per City
+* #### Percentage of closed businesses by City
+
+ With this  query, I aimed to determine the closure rate of businesses by city, assessing  the market's level of challenge
 
 ``` SQL
 SELECT SUM(CASE WHEN is_open = 0 THEN 1 ELSE 0 END) AS Closed_businesses
