@@ -244,3 +244,37 @@ We've chosen Tampa, FL for our new coffee shop location for the following reason
 * CoffeeKing is confident in offering a unique product that can stand out among competitors.
 * City has an average of 74 reviews per coffee and tea business, showing active customer engagement. We'll also consider population and the overall business environment.
 
+### Strategic Analysis for Competitive Distinction
+
+* This query examines six attributes and their potential impact on business ratings, both positively and negatively.
+
+#### Attributes vs. Star Ratings
+
+``` SQL
+SELECT
+    a.WiFi
+    ,a.OutdoorSeating
+    ,a.HasTV
+	,a.DogsAllowed
+	,a.Alcohol
+	,a.BikeParking
+	,a.RestaurantsReservations
+    ,ROUND(AVG(b.stars),1) AS AvgStarRating
+FROM
+    yelp_attributes a
+INNER JOIN
+    yelp_business b ON a.business_id = b.business_id
+WHERE
+    state = 'FL' AND city = 'Saint Petersburg' AND categories LIKE '%Coffee & Tea%'
+GROUP BY
+     a.WiFi
+    ,a.OutdoorSeating
+    ,a.HasTV
+	,a.DogsAllowed
+	,a.BikeParking
+	,a.Alcohol
+	,a.RestaurantsReservations
+ORDER BY AvgStarRating DESC
+```
+
+
