@@ -236,3 +236,11 @@ LIMIT 5;
 | 11                | 57          | 19.3%              | FL    | St. Petersburg    |
 | 7                 | 39          | 17.95%             | FL    | Largo             |
 
+### Key Takeaways
+
+We've chosen Tampa, FL for our new coffee shop location for the following reasons:
+
+* Attracted by the city's average star rating of 3.7, indicating market differentiation opportunities and room for improvement.
+* CoffeeKing is confident in offering a unique product that can stand out among competitors.
+* City has an average of 74 reviews per coffee and tea business, showing active customer engagement. We'll also consider population and the overall business environment.
+
