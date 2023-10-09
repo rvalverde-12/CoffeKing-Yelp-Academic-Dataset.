@@ -277,4 +277,26 @@ GROUP BY
 ORDER BY AvgStarRating DESC
 ```
 
+| WiFi   | Outdoor Seating | Has TV | Dogs Allowed | Alcohol        | Bike Parking | Restaurants Reservations | Avg Star Rating |
+|--------|-----------------|--------|--------------|----------------|--------------|--------------------------|-----------------|
+| Free   | True            | True   | NA           | Beer and Wine  | True         | NA                       | 5.0             |
+| No     | False           | False  | True         | N/A            | True         | False                    | 5.0             |
+| No     | True            | True   | True         | Beer and Wine  | True         | False                    | 5.0             |
+| Free   | False           | False  | NA           | Beer and Wine  | True         | True                     | 4.5             |
+| Free   | NA              | NA     | NA           | NA             | False        | True                     | 4.5             |
+| Free   | True            | False  | True         | Full Bar       | True         | False                    | 4.5             |
+| Free   | True            | NA     | False        | NA             | True         | NA                       | 4.5             |
+| Free   | True            | NA     | True         | NA             | NA           | NA                       | 4.5             |
+| Free   | True            | NA     | True         | N/A            | True         | NA                       | 4.5             |
+| Free   | True            | NA     | True         | N/A            | True         | NA                       | 4.5             |
+| Free   | True            | True   | True         | N/A            | NA           | False                    | 4.5             |
+| Free   | True            | True   | True         | Beer and Wine  | True         | False                    | 4.5             |
+| No     | False           | True   | NA           | N/A            | True         | True                     | 4.5             |
+| No     | True            | False  | False        | Beer and Wine  | True         | False                    | 4.5             |
+| No     | True            | False  | True         | Beer and Wine  | True         | False                    | 4.5             |
+| No     | True            | False  | True         | N/A            | True         | False                    | 4.5             |
+| No     | True            | NA     | True         | NA             | True         | NA                       | 4.5             |
+
+
+
 
