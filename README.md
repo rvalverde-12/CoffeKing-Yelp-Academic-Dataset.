@@ -250,52 +250,37 @@ We've chosen Tampa, FL for our new coffee shop location for the following reason
 
 #### Attributes vs. Star Ratings
 
+The purpose of this query is to analyze the correlation between various attributes (outdoor seating, dogs allowed, bike parking, alcohol service, restaurant delivery, and table service) and the star ratings of coffee and tea shops in Saint Petersburg, Florida, with star ratings of 3.5 or higher..
+
 ``` SQL
 SELECT
-    a.WiFi
-    ,a.OutdoorSeating
-    ,a.HasTV
-	,a.DogsAllowed
-	,a.Alcohol
-	,a.BikeParking
-	,a.RestaurantsReservations
-    ,ROUND(AVG(b.stars),1) AS AvgStarRating
+     b.stars  AS StarRating
+	,COUNT(*) AS NumOfStores
+	,(ROUND(SUM(CASE WHEN a.OutdoorSeating = 'True' THEN 1 ELSE 0 END) * 100.0 / COUNT(*),1)) AS PercentageOutdoorSeating
+	,(ROUND(SUM(CASE WHEN a.DogsAllowed = 'True' THEN 1 ELSE 0 END) * 100.0 / COUNT(*),1)) AS PercentageAllowedDogs
+	,(ROUND(SUM(CASE WHEN a.BikeParking = 'True' THEN 1 ELSE 0 END) * 100.0 / COUNT(*),1)) AS PercentageBikeParking
+	,(ROUND(SUM(CASE WHEN a.Alcohol = 'Full_Bar' OR 'Beer_and_Wine' THEN 1 ELSE 0 END) * 100.0 / COUNT(*),1)) AS PercentageAlcohol
+	,(ROUND(SUM(CASE WHEN a.RestaurantsDelivery = 'True' THEN 1 ELSE 0 END) * 100.0 / COUNT(*),1)) AS PercentageRestaurantDelivery
+	,(ROUND(SUM(CASE WHEN a.RestaurantsTableService = 'True' THEN 1 ELSE 0 END) * 100.0 / COUNT(*),1)) AS PercentageTableService
 FROM
     yelp_attributes a
 INNER JOIN
     yelp_business b ON a.business_id = b.business_id
 WHERE
-    state = 'FL' AND city = 'Saint Petersburg' AND categories LIKE '%Coffee & Tea%'
+     state = 'FL' AND city = 'Saint Petersburg' AND categories LIKE '%Coffee & Tea%' AND StarRating >= '3.5'
 GROUP BY
-     a.WiFi
-    ,a.OutdoorSeating
-    ,a.HasTV
-	,a.DogsAllowed
-	,a.BikeParking
-	,a.Alcohol
-	,a.RestaurantsReservations
-ORDER BY AvgStarRating DESC
+     StarRating
+ORDER BY
+     StarRating DESC;
 ```
 
-| WiFi   | Outdoor Seating | Has TV | Dogs Allowed | Alcohol        | Bike Parking | Restaurants Reservations | Avg Star Rating |
-|--------|-----------------|--------|--------------|----------------|--------------|--------------------------|-----------------|
-| Free   | True            | True   | NA           | Beer and Wine  | True         | NA                       | 5.0             |
-| No     | False           | False  | True         | N/A            | True         | False                    | 5.0             |
-| No     | True            | True   | True         | Beer and Wine  | True         | False                    | 5.0             |
-| Free   | False           | False  | NA           | Beer and Wine  | True         | True                     | 4.5             |
-| Free   | NA              | NA     | NA           | NA             | False        | True                     | 4.5             |
-| Free   | True            | False  | True         | Full Bar       | True         | False                    | 4.5             |
-| Free   | True            | NA     | False        | NA             | True         | NA                       | 4.5             |
-| Free   | True            | NA     | True         | NA             | NA           | NA                       | 4.5             |
-| Free   | True            | NA     | True         | N/A            | True         | NA                       | 4.5             |
-| Free   | True            | NA     | True         | N/A            | True         | NA                       | 4.5             |
-| Free   | True            | True   | True         | N/A            | NA           | False                    | 4.5             |
-| Free   | True            | True   | True         | Beer and Wine  | True         | False                    | 4.5             |
-| No     | False           | True   | NA           | N/A            | True         | True                     | 4.5             |
-| No     | True            | False  | False        | Beer and Wine  | True         | False                    | 4.5             |
-| No     | True            | False  | True         | Beer and Wine  | True         | False                    | 4.5             |
-| No     | True            | False  | True         | N/A            | True         | False                    | 4.5             |
-| No     | True            | NA     | True         | NA             | True         | NA                       | 4.5             |
+| Star Rating | Num of Stores | Outdoor Seating Percentage | Dogs Allowed Percentage | Bike Parking Percentage | Alcohol Percentage | Restaurant Delivery Percentage | Table Service Percentage | Percentage Has TV |
+|-------------|---------------|----------------------------|-----------------------|---------------------------|-------------------|-----------------------------|------------------------------|-------------------|
+| 5.0         | 5             | 60.0                       | 40.0                  | 80.0                      | 40.0              | 20.0                        | 0.0                          | 40.0              |
+| 4.5         | 29            | 69.0                       | 41.4                  | 82.8                      | 17.2              | 37.9                        | 6.9                          | 24.1              |
+| 4.0         | 20            | 65.0                       | 25.0                  | 85.0                      | 15.0              | 40.0                        | 20.0                         | 50.0              |
+| 3.5         | 5             | 60.0                       | 0.0                   | 80.0                      | 0.0               | 40.0                        | 20.0                         | 0.0               |
+
 
 
 
