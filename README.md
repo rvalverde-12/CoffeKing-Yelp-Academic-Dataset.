@@ -246,8 +246,6 @@ We've chosen Tampa, FL for our new coffee shop location for the following reason
 
 ### Strategic Analysis for Competitive Distinction
 
-* This query examines six attributes and their potential impact on business ratings, both positively and negatively.
-
 #### Attributes vs. Star Ratings
 
 The purpose of this query is to analyze the correlation between various attributes (outdoor seating, dogs allowed, bike parking, alcohol service, restaurant delivery, and table service) and the star ratings of coffee and tea shops in Saint Petersburg, Florida, with star ratings of 3.5 or higher..
