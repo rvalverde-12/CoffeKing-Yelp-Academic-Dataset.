@@ -313,5 +313,37 @@ LIMIT 5;
 | 3.5         | 8.48             | 131        |
 | 3.0         | 7.47             | 84         |
 
+#### Closing Hours Range ##
 
+The purpose of this query is to calculate the average closing hours based on the star rating and the number of reviews for coffee and tea businesses in Saint Petersburg, Florida
+
+``` SQL
+SELECT  
+		 b.stars AS StarRating
+		,ROUND(AVG(c.Monday_Close + c.Tuesday_Close + c.Wednesday_Close + c.Thursday_Close + c.Friday_Close) / 5, 2) AS AvgClosingHour
+		,SUM(b.review_count)as Num_Reviews
+		
+FROM yelp_closing_hours c
+	
+INNER JOIN yelp_business b
+
+ON c.business_id = b.business_id
+
+WHERE 
+
+	 state = 'FL' AND city = 'Saint Petersburg' AND categories LIKE '%Coffee & Tea%'
+	 
+GROUP BY b.stars
+ORDER BY StarRating DESC
+LIMIT 5;
+		
+```
+
+| Star Rating | Avg Closing Hour | Num Reviews |
+|-------------|------------------|------------|
+| 5.0         | 3.24             | 320        |
+| 4.5         | 5.84             | 4717       |
+| 4.0         | 5.45             | 1335       |
+| 3.5         | 9.2              | 131        |
+| 3.0         | 5.93             | 84         |
 
