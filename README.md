@@ -3,7 +3,7 @@
 ## Background
 CoffeeKing, a startup coffee company, aims to offer a unique and inclusive experience. They seek insights from Yelp reviews and user data to inform location selection, operating hours, business enhancements, and loyalty-focused marketing strategies.
 
-I'm choosing this project over the other ones because I'm highly intrigued by the potential insights I can found through an in-depth analysis of Yelp data. My extensive experience in the merchant cash advance industry has given me a deep appreciation for understanding the intricacies of how businesses operate.
+For my final project in the Coursera Course, "Learn SQL Basics for Data Science Specialization," I've decided to focus on Yelp data analysis. I find this project particularly compelling due to the potential insights it can offer. My background in the merchant cash advance industry has instilled in me a profound understanding of business operations and their complexities, which I hope to leverage in this analysis.
 
 ### **Data Overview**
 
