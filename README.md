@@ -347,3 +347,34 @@ LIMIT 5;
 | 3.5         | 9.2              | 131        |
 | 3.0         | 5.93             | 84         |
 
+#### Price Range vs Rating ##
+
+The query below reflects the relationship between price range and star rating:
+
+``` SQL
+SELECT a.RestaurantsPriceRange2 AS PriceRange
+        ,ROUND(AVG(b.stars),2) as StarRating
+		,COUNT(*) AS Stores
+		
+	
+FROM yelp_attributes a
+
+INNER JOIN
+
+	yelp_business b
+	
+ON a.business_id = b.business_id
+
+WHERE a.RestaurantsPriceRange2 NOT IN ('None','NA')
+		AND b.state = 'FL' 
+		AND b.city = 'Saint Petersburg' 
+		AND b.categories LIKE '%Coffee & Tea%'
+GROUP BY  a.RestaurantsPriceRange2
+
+```
+| Price Range | Star Rating | Stores |
+|-------------|------------|--------|
+| 1           | 3.61       | 45     |
+| 2           | 4.11       | 22     |
+| 3           | 4.0        | 2      |
+
