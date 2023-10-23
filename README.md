@@ -265,19 +265,20 @@ FROM
 INNER JOIN
     yelp_business b ON a.business_id = b.business_id
 WHERE
-     state = 'FL' AND city = 'Saint Petersburg' AND categories LIKE '%Coffee & Tea%' AND StarRating >= '3.5'
+     state = 'FL' AND city = 'Tampa' AND categories LIKE '%Coffee & Tea%' AND StarRating >= '3.5'
 GROUP BY
      StarRating
 ORDER BY
      StarRating DESC;
+
 ```
 
-| Star Rating | Num of Stores | Outdoor Seating Percentage | Dogs Allowed Percentage | Bike Parking Percentage | Alcohol Percentage | Restaurant Delivery Percentage | Table Service Percentage | Percentage Has TV |
-|-------------|---------------|----------------------------|-----------------------|---------------------------|-------------------|-----------------------------|------------------------------|-------------------|
-| 5.0         | 5             | 60.0                       | 40.0                  | 80.0                      | 40.0              | 20.0                        | 0.0                          | 40.0              |
-| 4.5         | 29            | 69.0                       | 41.4                  | 82.8                      | 17.2              | 37.9                        | 6.9                          | 24.1              |
-| 4.0         | 20            | 65.0                       | 25.0                  | 85.0                      | 15.0              | 40.0                        | 20.0                         | 50.0              |
-| 3.5         | 5             | 60.0                       | 0.0                   | 80.0                      | 0.0               | 40.0                        | 20.0                         | 0.0               |
+| Star Rating | Num of Stores | Percentage Outdoor Seating | Percentage Allowed Dogs | Percentage Bike Parking | Percentage Alcohol | Percentage Restaurant Delivery | Percentage Table Service |
+|-------------|---------------|-----------------------------|-------------------------|------------------------|--------------------|-----------------------------|--------------------------|
+| 5.0         | 28            | 50.0                      | 21.4                  | 50.0                   | 0.0                | 32.1                        | 7.1                      |
+| 4.5         | 97            | 54.6                      | 27.8                  | 64.9                   | 3.1                | 46.4                        | 11.3                     |
+| 4.0         | 97            | 53.6                      | 19.6                  | 69.1                   | 10.3               | 45.4                        | 12.4                     |
+| 3.5         | 47            | 51.1                      | 8.5                   | 59.6                   | 0.0                | 40.4                        | 10.6                     |
 
 
 #### Opening Hours Range ##
@@ -298,20 +299,22 @@ ON o.business_id = b.business_id
 
 WHERE 
 
-	 state = 'FL' AND city = 'Saint Petersburg' AND categories LIKE '%Coffee & Tea%'
+	 state = 'FL' AND city = 'Tampa' AND categories LIKE '%Coffee & Tea%'
 	 
 GROUP BY b.stars
 ORDER BY StarRating DESC
 LIMIT 5;
+
 ```
 
 | Star Rating | Avg Opening Hour | Num Reviews |
 |-------------|------------------|------------|
-| 5.0         | 5.16             | 320        |
-| 4.5         | 7.47             | 4717       |
-| 4.0         | 8.87             | 1335       |
-| 3.5         | 8.48             | 131        |
-| 3.0         | 7.47             | 84         |
+| 5.0         | 7.84             | 1608       |
+| 4.5         | 7.33             | 10787      |
+| 4.0         | 7.67             | 10270      |
+| 3.5         | 7.05             | 1722       |
+| 3.0         | 6.48             | 1422       |
+
 
 #### Closing Hours Range ##
 
@@ -331,7 +334,7 @@ ON c.business_id = b.business_id
 
 WHERE 
 
-	 state = 'FL' AND city = 'Saint Petersburg' AND categories LIKE '%Coffee & Tea%'
+	 state = 'FL' AND city = 'Tampa' AND categories LIKE '%Coffee & Tea%'
 	 
 GROUP BY b.stars
 ORDER BY StarRating DESC
@@ -339,13 +342,14 @@ LIMIT 5;
 		
 ```
 
-| Star Rating | Avg Closing Hour | Num Reviews |
+| Star Rating | Avg Opening Hour | Num Reviews |
 |-------------|------------------|------------|
-| 5.0         | 3.24             | 320        |
-| 4.5         | 5.84             | 4717       |
-| 4.0         | 5.45             | 1335       |
-| 3.5         | 9.2              | 131        |
-| 3.0         | 5.93             | 84         |
+| 5.0         | 5.58             | 1608       |
+| 4.5         | 6.22             | 10787      |
+| 4.0         | 7.11             | 10270      |
+| 3.5         | 7.51             | 1722       |
+| 3.0         | 7.39             | 1422       |
+
 
 #### Price Range vs Rating ##
 
@@ -367,14 +371,14 @@ ON a.business_id = b.business_id
 
 WHERE a.RestaurantsPriceRange2 NOT IN ('None','NA')
 		AND b.state = 'FL' 
-		AND b.city = 'Saint Petersburg' 
+		AND b.city = 'Tampa' 
 		AND b.categories LIKE '%Coffee & Tea%'
 GROUP BY  a.RestaurantsPriceRange2
 
 ```
 | Price Range | Star Rating | Stores |
 |-------------|------------|--------|
-| 1           | 3.61       | 45     |
-| 2           | 4.11       | 22     |
-| 3           | 4.0        | 2      |
+| 1           | 3.23       | 189    |
+| 2           | 3.87       | 135    |
+| 3           | 3.5        | 4      |
 
