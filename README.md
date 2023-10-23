@@ -342,13 +342,14 @@ LIMIT 5;
 		
 ```
 
-| Star Rating | Avg Opening Hour | Num Reviews |
+| Star Rating | Avg Closing Hour | Num Reviews |
 |-------------|------------------|------------|
 | 5.0         | 5.58             | 1608       |
 | 4.5         | 6.22             | 10787      |
 | 4.0         | 7.11             | 10270      |
 | 3.5         | 7.51             | 1722       |
 | 3.0         | 7.39             | 1422       |
+
 
 
 #### Price Range vs Rating ##
