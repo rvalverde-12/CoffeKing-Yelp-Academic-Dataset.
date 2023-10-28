@@ -351,6 +351,8 @@ LIMIT 5;
 | 3.0         | 7.39             | 1422       |
 
 
+### Relationships / Correlation
+
 
 #### Price Range vs Rating ##
 
@@ -374,7 +376,13 @@ GROUP BY b.stars
 ORDER BY b.stars DESC;
 
 ```
-| Star Rating | Price Range |
+  </div>
+  <div style="flex: 1; text-align: center;">
+   <img src="images/Star Rating vs Price Range.png" width="500"/>
+  </div>
+</div>
+
+| Star Rating | Price Range |                             
 |-------------|-------------|
 | 5.0         | 0.9         |
 | 4.5         | 1.2         |
@@ -387,3 +395,31 @@ ORDER BY b.stars DESC;
 | 1.0         | 1.0         |
 
 
+#### Star Rating vs Num Reviews ##
+
+``` SQL
+SELECT stars AS StarRating
+		,SUM(review_count) AS NumReviews
+		
+FROM yelp_business
+
+GROUP BY stars
+
+ORDER BY stars DESC;
+```
+  </div>
+  <div style="flex: 1; text-align: center;">
+   <img src="images/Star Rating vs Num Of Reviews.png" width="500"/>
+  </div>
+</div>
+
+| Star Rating | Num Reviews |
+|-------------|-------------|
+| 3.0         | 1422        |
+| 2.5         | 1300        |
+| 2.0         | 1068        |
+| 1.5         | 579         |
+| 1.0         | 56          |
+
+
+     
