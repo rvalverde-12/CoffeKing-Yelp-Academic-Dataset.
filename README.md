@@ -357,29 +357,33 @@ LIMIT 5;
 The query below reflects the relationship between price range and star rating:
 
 ``` SQL
-SELECT a.RestaurantsPriceRange2 AS PriceRange
-        ,ROUND(AVG(b.stars),2) as StarRating
-		,COUNT(*) AS Stores
+SELECT b.stars AS StarRating
+	   ,ROUND(AVG(a.RestaurantsPriceRange2),1) AS PriceRange
+	   
+	
+FROM yelp_business b
+
+INNER JOIN yelp_attributes a
+
+ON b.business_id = a.business_id
+
+WHERE state = 'FL' AND city = 'Tampa' AND categories LIKE '%Coffee & Tea%'
+
+GROUP BY b.stars
 		
-	
-FROM yelp_attributes a
-
-INNER JOIN
-
-	yelp_business b
-	
-ON a.business_id = b.business_id
-
-WHERE a.RestaurantsPriceRange2 NOT IN ('None','NA')
-		AND b.state = 'FL' 
-		AND b.city = 'Tampa' 
-		AND b.categories LIKE '%Coffee & Tea%'
-GROUP BY  a.RestaurantsPriceRange2
+ORDER BY b.stars DESC;
 
 ```
-| Price Range | Star Rating | Stores |
-|-------------|------------|--------|
-| 1           | 3.23       | 189    |
-| 2           | 3.87       | 135    |
-| 3           | 3.5        | 4      |
+| Star Rating | Price Range |
+|-------------|-------------|
+| 5.0         | 0.9         |
+| 4.5         | 1.2         |
+| 4.0         | 1.3         |
+| 3.5         | 1.3         |
+| 3.0         | 1.5         |
+| 2.5         | 1.1         |
+| 2.0         | 1.0         |
+| 1.5         | 1.0         |
+| 1.0         | 1.0         |
+
 
