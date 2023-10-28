@@ -409,7 +409,7 @@ ORDER BY stars DESC;
 ```
   </div>
   <div style="flex: 1; text-align: center;">
-   <img src="images/Star Rating vs Num Of Reviews.png" width="500"/>
+   <img src="images/Star Rating vs Num Of Reviews1.png" width="500"/>
   </div>
 </div>
 
