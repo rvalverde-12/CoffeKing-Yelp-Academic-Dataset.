@@ -422,4 +422,109 @@ ORDER BY stars DESC;
 | 1.0         | 56          |
 
 
-     
+#### Star Rating vs "Useful" Votes ##
+
+``` SQL
+SELECT b.stars AS Star Rating
+	  ,SUM(r.useful) AS TotalUsefulVotes
+	  
+FROM yelp_business b
+
+INNER JOIN yelp_review r 
+
+ON b.business_id = r.business_id
+
+WHERE state = 'FL' AND city = 'Tampa' AND categories LIKE '%Coffee & Tea%'
+
+GROUP BY b.stars
+ORDER BY b.stars DESC;
+```
+  </div>
+  <div style="flex: 1; text-align: center;">
+   <img src="images/Star Rating vs Useful Votes.png" width="500"/>
+  </div>
+</div>
+
+| Star Rating | Total Useful Votes |
+|-------------|--------------------|
+| 5.0         | 2141               |
+| 4.5         | 12610              |
+| 4.0         | 11790              |
+| 3.5         | 2283               |
+| 3.0         | 1506               |
+| 2.5         | 2428               |
+| 2.0         | 814                |
+| 1.5         | 456                |
+| 1.0         | 16                 |
+
+#### Star Rating vs "Cool" Votes ##
+
+``` SQL
+SELECT b.stars AS StarRating
+	  ,SUM(r.cool) AS TotalCoolVotes
+	  
+FROM yelp_business b
+
+INNER JOIN yelp_review r 
+
+ON b.business_id = r.business_id
+WHERE state = 'FL' AND city = 'Tampa' AND categories LIKE '%Coffee & Tea%'
+
+GROUP BY b.stars
+ORDER BY b.stars DESC;
+```
+
+  </div>
+  <div style="flex: 1; text-align: center;">
+   <img src="images/Star Rating vs Cool Votes.png" width="500"/>
+  </div>
+</div>
+
+| Star Rating | Total Cool Votes |
+|-------------|------------------|
+| 5.0         | 1748             |
+| 4.5         | 9282             |
+| 4.0         | 7565             |
+| 3.5         | 1318             |
+| 3.0         | 841              |
+| 2.5         | 852              |
+| 2.0         | 344              |
+| 1.5         | 139              |
+| 1.0         | 8                |
+
+#### Star Rating vs "Funny" Votes ##
+
+``` SQL
+SELECT b.stars AS StarRating
+	  ,SUM(r.funny) AS TotalFunnyVotes
+	  
+FROM yelp_business b
+
+INNER JOIN yelp_review r 
+
+ON b.business_id = r.business_id
+WHERE state = 'FL' AND city = 'Tampa' AND categories LIKE '%Coffee & Tea%'
+
+GROUP BY b.stars
+ORDER BY b.stars DESC;
+```
+
+  </div>
+  <div style="flex: 1; text-align: center;">
+   <img src="images/Star Rating vs Funny Votes.png" width="500"/>
+  </div>
+</div>
+
+
+| Star Rating | Total Funny Votes |
+|-------------|-------------------|
+| 5.0         | 639               |
+| 4.5         | 3612              |
+| 4.0         | 3702              |
+| 3.5         | 747               |
+| 3.0         | 544               |
+| 2.5         | 850               |
+| 2.0         | 349               |
+| 1.5         | 175               |
+| 1.0         | 9                 |
+
